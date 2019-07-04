@@ -1,19 +1,25 @@
 defmodule OfferService.Application do
-  # See https://hexdocs.pm/elixir/Application.html
-  # for more information on OTP Applications
   @moduledoc false
 
   use Application
 
   def start(_type, _args) do
+    port = retrieve_port()
+
     children = [
-      # Starts a worker by calling: OfferService.Worker.start_link(arg)
-      # {OfferService.Worker, arg}
+      {Plug.Cowboy, scheme: :http, plug: OfferService.Interfaces.Router, options: [port: port]}
     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
     opts = [strategy: :one_for_one, name: OfferService.Supervisor]
-    Supervisor.start_link(children, opts)
+
+    with result = {:ok, _pid} <- Supervisor.start_link(children, opts) do
+      IO.puts("Service running on port #{port}")
+      result
+    end
+  end
+
+  defp retrieve_port() do
+    Application.get_env(:offer_service, :port, "4001")
+    |> String.to_integer()
   end
 end
