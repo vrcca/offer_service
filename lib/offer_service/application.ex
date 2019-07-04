@@ -13,13 +13,13 @@ defmodule OfferService.Application do
     opts = [strategy: :one_for_one, name: OfferService.Supervisor]
 
     with result = {:ok, _pid} <- Supervisor.start_link(children, opts) do
-      IO.puts("Service running on port #{port}")
+      IO.puts("Server running on port #{port}")
       result
     end
   end
 
   defp retrieve_port() do
-    Application.get_env(:offer_service, :port, "4001")
+    System.get_env("PORT", "4001")
     |> String.to_integer()
   end
 end
