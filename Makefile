@@ -10,8 +10,8 @@ test:
 	mix test
 
 dependencies:
-	printf 'Y' | mix local.hex --if-missing && \
-	mix local.rebar --force  && \
+	printf 'Y'  | mix local.hex --if-missing && \
+	printf 'nn' | mix local.rebar  && \
 	mix deps.get
 
 start:
