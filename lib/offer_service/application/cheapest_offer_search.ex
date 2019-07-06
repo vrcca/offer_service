@@ -9,9 +9,10 @@ defmodule OfferService.Application.CheapestOfferSearch do
 
   defp search_matching_offers(prefs, repositories) do
     repositories
-    |> stream_in_parallel(fn repo -> repo.search_offers(prefs) end)
+    |> stream_in_parallel(fn repo -> repo.retrieve_cheapest_offer(prefs) end)
     |> Stream.filter(fn result -> elem(result, 0) == :ok end)
-    |> Stream.flat_map(fn {:ok, offers} -> offers end)
+    |> Stream.filter(fn {:ok, offer} -> offer != nil end)
+    |> Stream.map(fn {:ok, offer} -> offer end)
   end
 
   defp select_cheapest(offers) do

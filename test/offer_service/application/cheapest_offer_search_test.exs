@@ -31,10 +31,10 @@ defmodule OfferService.Application.CheapestOfferSearchTest do
 
     test "returns empty offers when there is none", %{repositories: repos} do
       @british_repository
-      |> expect(:retrieve_cheapest_offer, fn _prefs -> [] end)
+      |> expect(:retrieve_cheapest_offer, fn _prefs -> nil end)
 
       @airfrance_repository
-      |> expect(:retrieve_cheapest_offer, fn _prefs -> [] end)
+      |> expect(:retrieve_cheapest_offer, fn _prefs -> nil end)
 
       assert nil == @search.search(a_flight_preference(), repos)
     end
