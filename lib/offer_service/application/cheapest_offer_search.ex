@@ -16,7 +16,7 @@ defmodule OfferService.Application.CheapestOfferSearch do
 
   defp select_cheapest(offers) do
     offers
-    |> Enum.min_by(fn %Offer{price: price} -> price end)
+    |> Enum.min_by(fn %Offer{price: price} -> price end, fn -> nil end)
   end
 
   defp stream_in_parallel(enumerables, fun) do

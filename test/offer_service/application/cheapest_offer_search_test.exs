@@ -9,8 +9,12 @@ defmodule OfferService.Application.CheapestOfferSearchTest do
 
   setup :verify_on_exit!
 
+  setup do
+    %{repositories: [@british_repository, @airfrance_repository]}
+  end
+
   describe "search/2" do
-    test "searches all airlines for cheapest flight offer" do
+    test "searches all airlines for cheapest flight offer", %{repositories: repos} do
       preferences = a_flight_preference()
 
       british_offer = a_offer(price: 2000)
@@ -22,9 +26,17 @@ defmodule OfferService.Application.CheapestOfferSearchTest do
       @airfrance_repository
       |> expect(:search_offers, fn ^preferences -> [airfrance_offer] end)
 
-      repositories = [@british_repository, @airfrance_repository]
+      assert airfrance_offer = @search.search(preferences, repos)
+    end
 
-      assert airfrance_offer = @search.search(preferences, repositories)
+    test "returns empty offers when there is none", %{repositories: repos} do
+      @british_repository
+      |> expect(:search_offers, fn _prefs -> [] end)
+
+      @airfrance_repository
+      |> expect(:search_offers, fn _prefs -> [] end)
+
+      assert nil == @search.search(a_flight_preference(), repos)
     end
   end
 end
