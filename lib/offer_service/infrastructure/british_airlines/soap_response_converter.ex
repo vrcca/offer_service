@@ -7,23 +7,22 @@ defmodule OfferService.Infrastructure.BritishAirlines.SoapResponseConverter do
     payload
     |> stream_tags([:AirlineOffer], discard: [:AirlineOffer])
     |> Stream.map(fn {_, offer} ->
-      %{
-        airline: offer |> xpath(~x"./OfferID/@Owner"s),
-        price: offer |> xpath(~x"./TotalPrice/SimpleCurrencyPrice/text()"s)
-      }
+      price =
+        offer
+        |> xpath(~x"./TotalPrice/SimpleCurrencyPrice/text()"s)
+        |> convert_price_to_cents()
+
+      airline = offer |> xpath(~x"./OfferID/@Owner"s)
+      Offer.new(price: price, airline: airline)
     end)
-    |> Stream.map(fn offer = %{price: price} ->
-      Map.put(offer, :price, convert_price_to_cents(price))
-    end)
-    |> Stream.map(fn offer = %{} -> Offer.new(Enum.into(offer, [])) end)
     |> Stream.take(1)
     |> Enum.to_list()
   end
 
   defp convert_price_to_cents(price) do
     price
-    |> String.replace(~r/[,.]/, "")
     |> String.trim()
+    |> String.replace(~r/[,.]/, "")
     |> String.to_integer()
   end
 end
