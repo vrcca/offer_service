@@ -6,6 +6,19 @@ defmodule OfferService.Infrastructure.BritishAirlines.SoapResponseConverter do
   def convert(payload) do
     payload
     |> stream_tags([:AirlineOffer], discard: [:AirlineOffer])
+    |> to_domain_stream()
+    |> get_first()
+  end
+
+  defp convert_price_to_cents(price) do
+    price
+    |> String.trim()
+    |> String.replace(~r/[,.]/, "")
+    |> String.to_integer()
+  end
+
+  defp to_domain_stream(offers) do
+    offers
     |> Stream.map(fn {_, offer} ->
       price =
         offer
@@ -15,14 +28,15 @@ defmodule OfferService.Infrastructure.BritishAirlines.SoapResponseConverter do
       airline = offer |> xpath(~x"./OfferID/@Owner"s)
       Offer.new(price: price, airline: airline)
     end)
-    |> Stream.take(1)
-    |> Enum.to_list()
   end
 
-  defp convert_price_to_cents(price) do
-    price
-    |> String.trim()
-    |> String.replace(~r/[,.]/, "")
-    |> String.to_integer()
+  defp get_first(offers) do
+    offers
+    |> Stream.take(1)
+    |> Enum.to_list()
+    |> case do
+      [] -> nil
+      [offer] -> offer
+    end
   end
 end
