@@ -1,6 +1,6 @@
 PORT?=4001
 
-.PHONY: test, build, dependencies, start
+.PHONY: build, dependencies, start, unit-test, integration-test, start-dependencies, stop-dependencies, test
 
 build: dependencies
 	mix compile
@@ -13,11 +13,10 @@ dependencies:
 start:
 	PORT=$(PORT) mix run --no-halt
 
-
 test:
-	mix format --check-formatted; \
-	$(MAKE) start-dependencies; \
-	mix test --include integration
+	mix format --check-formatted && \
+	$(MAKE) start-dependencies && \
+	mix test --include integration && \
 	$(MAKE) stop-dependencies
 
 unit-test:
