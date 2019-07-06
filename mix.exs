@@ -25,7 +25,8 @@ defmodule OfferService.MixProject do
   defp deps do
     [
       {:plug_cowboy, "~> 2.1"},
-      {:mox, "~> 0.5", only: :test}
+      {:mox, "~> 0.5", only: :test},
+      {:httpoison, "~> 1.4"}
     ]
   end
 end
