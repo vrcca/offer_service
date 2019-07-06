@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+  mocks:
+    image: expert360/mountebank
+    ports:
+      - "7777:7777"
+      - "2525:2525"
+    volumes:
+      - "./priv/api_stubs:/imposters"
+    command: --configfile /imposters/imposters.ejs --allowInjection

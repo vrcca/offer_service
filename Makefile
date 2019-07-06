@@ -1,13 +1,9 @@
 PORT?=4001
 
-.PHONY: test
+.PHONY: test, build, dependencies, start
 
 build: dependencies
 	mix compile
-
-test:
-	@mix format --check-formatted && \
-	mix test
 
 dependencies:
 	printf 'Y'  | mix local.hex --if-missing && \
@@ -16,3 +12,22 @@ dependencies:
 
 start:
 	PORT=$(PORT) mix run --no-halt
+
+
+test:
+	mix format --check-formatted; \
+	$(MAKE) start-dependencies; \
+	mix test --include integration
+	$(MAKE) stop-dependencies
+
+unit-test:
+	mix test --exclude integration
+
+integration-test:
+	mix test --only integration
+
+start-dependencies:
+	docker-compose up -d
+
+stop-dependencies:
+	docker-compose down

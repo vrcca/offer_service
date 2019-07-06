@@ -1,0 +1,19 @@
+"responses": [
+    {
+        "is": {
+            "body": "<%- stringify(filename, 'responses/british_airlines_air_shopping.xml') %>",
+            "statusCode": 200,
+            "headers": {
+                "Content-Type": "text/xml;charset=utf-8"
+            }
+        }
+    }
+],
+"predicates": [
+    {
+        "matches": {
+            "method" : "POST",
+            "path" : "/selling-distribution/AirShopping/V2"
+        }
+    }
+]
