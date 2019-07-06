@@ -7,7 +7,8 @@ defmodule OfferService.Application do
     port = retrieve_port()
 
     children = [
-      {Plug.Cowboy, scheme: :http, plug: OfferService.Interfaces.Router, options: [port: port]}
+      {Plug.Cowboy, scheme: :http, plug: OfferService.Interfaces.Router, options: [port: port]},
+      {Task.Supervisor, name: OfferService.AirlineTaskSupervisor}
     ]
 
     opts = [strategy: :one_for_one, name: OfferService.Supervisor]
