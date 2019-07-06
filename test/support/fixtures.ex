@@ -11,7 +11,7 @@ defmodule Support.Fixtures do
   end
 
   def a_offer(opts) do
-    Offer.new(flight: a_flight(), price: 100)
+    Offer.new(flight: "AF", price: 100)
     |> struct(opts)
   end
 

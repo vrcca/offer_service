@@ -11,9 +11,21 @@
 ],
 "predicates": [
     {
-        "matches": {
-            "method" : "POST",
-            "path" : "/selling-distribution/AirShopping/V2"
-        }
+        "and": [
+            {
+                "matches": {
+                    "method" : "POST",
+                    "path" : "/selling-distribution/AirShopping/V2"
+                }
+            },
+            {
+                "contains": {
+                    "headers": {
+                        "Soapaction": "AirShoppingV01",
+                        "Content-Type": "application/xml"
+                    }
+                }
+            }
+        ]
     }
 ]

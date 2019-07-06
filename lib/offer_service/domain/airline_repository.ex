@@ -1,4 +1,4 @@
 defmodule OfferService.Domain.AirlineRepository do
   alias OfferService.Domain.{FlightPreferences, Offer}
-  @callback search_offers(%FlightPreferences{}) :: [%Offer{}]
+  @callback retrieve_cheapest_offer(%FlightPreferences{}) :: %Offer{}
 end

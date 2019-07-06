@@ -21,20 +21,20 @@ defmodule OfferService.Application.CheapestOfferSearchTest do
       airfrance_offer = a_offer(price: 1000)
 
       @british_repository
-      |> expect(:search_offers, fn ^preferences -> [british_offer] end)
+      |> expect(:retrieve_cheapest_offer, fn ^preferences -> british_offer end)
 
       @airfrance_repository
-      |> expect(:search_offers, fn ^preferences -> [airfrance_offer] end)
+      |> expect(:retrieve_cheapest_offer, fn ^preferences -> airfrance_offer end)
 
       assert airfrance_offer = @search.search(preferences, repos)
     end
 
     test "returns empty offers when there is none", %{repositories: repos} do
       @british_repository
-      |> expect(:search_offers, fn _prefs -> [] end)
+      |> expect(:retrieve_cheapest_offer, fn _prefs -> [] end)
 
       @airfrance_repository
-      |> expect(:search_offers, fn _prefs -> [] end)
+      |> expect(:retrieve_cheapest_offer, fn _prefs -> [] end)
 
       assert nil == @search.search(a_flight_preference(), repos)
     end
