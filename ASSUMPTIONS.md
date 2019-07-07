@@ -11,18 +11,18 @@ Here are located the use cases of the app (which is just 1 for now). This should
 You can find domain-specific logic. For now, I only created the repositories and the domain models. This should be also heavily covered by tests.
 
 ### Infrastructure
-Keeps all the "glue code" necessary for it to run. It connects the app to the external services. Tests in here are usually integration tests.
-
-#### About Airline specific code
-
-1. I deliberately left the Airline's SOAP repositories with duplicate code. This is to avoid needless abstractions and increasing complexity. I believe currently it is pretty simple to maintain and evolve as it is.
-
-2. I thought that the Airline specific code could be made into separate applications. However, I did not want to make it more complex than it needs to be, so I left them in the same repo. 
+Keeps all the "glue code" necessary for it to run. It connects the app to the external services. Tests in here are usually integration tests. You will notice [airline-specific code](#about-airline-specific-code) here.
 
 ### Interfaces
 The entry points of the app. In here, I left the parsing logic to keep it closer to the code that uses it. Tests in this folder are mostly integration tests.
 
 Modules in here are great candidates to be moved to `infrastructure` as well.
+
+### Airline-specific code
+
+1. I deliberately left the Airline's SOAP repositories with duplicated code. This is to avoid needless abstractions and increasing complexity. I believe that, as it is now, it is pretty easy to read, maintain and evolve.
+
+2. I think that the Airline specific code can be made into separate applications. However, I did not want to make it more complex than it needs to be, so I left them in the same repo.
 
 ## About the data
 1. According to my research, both Airline APIs lists the offers sorted by lowest to highest price. For this reason, I am avoided parsing the entire XML file to ensure that the price is the lowest. This is only valid for our case: adult, one-way flights.
