@@ -1,15 +1,19 @@
-defmodule OfferService.Infrastructure.OfferSoapResponseConverter do
+defmodule OfferService.Infrastructure.OfferXmlConverter do
   import SweetXml
 
   alias OfferService.Domain.Offer
 
-  def convert_to_domain_stream("", _, _, _) do
+  def convert_to_domain_stream("", _mappings) do
     []
   end
 
-  def convert_to_domain_stream(payload, tags_to_stream, price_xpath, airline_xpath) do
+  def convert_to_domain_stream(payload, %{
+        root_tags: root_tags,
+        price_xpath: price_xpath,
+        airline_xpath: airline_xpath
+      }) do
     payload
-    |> stream_tags(tags_to_stream, discard: tags_to_stream)
+    |> stream_tags(root_tags, discard: root_tags)
     |> to_domain_stream(price_xpath, airline_xpath)
   end
 

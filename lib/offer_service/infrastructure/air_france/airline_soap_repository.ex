@@ -3,12 +3,14 @@ defmodule OfferService.Infrastructure.AirFrance.AirlineSoapRepository do
   require Logger
 
   alias OfferService.Domain.{FlightPreferences, AirlineRepository}
-  alias OfferService.Infrastructure.AirFrance.{SoapRequestConverter}
-  alias OfferService.Infrastructure.OfferSoapResponseConverter
+  alias OfferService.Infrastructure.AirFrance.SoapRequestConverter
+  alias OfferService.Infrastructure.OfferXmlConverter
 
-  @offer_tag [:Offer]
-  @price_xpath ~x"./TotalPrice/DetailCurrencyPrice/Total/text()"s
-  @airline_xpath ~x"./@Owner"s
+  @mappings %{
+    root_tags: [:Offer],
+    price_xpath: ~x"./TotalPrice/DetailCurrencyPrice/Total/text()"s,
+    airline_xpath: ~x"./@Owner"s
+  }
 
   @behaviour AirlineRepository
 
@@ -49,11 +51,9 @@ defmodule OfferService.Infrastructure.AirFrance.AirlineSoapRepository do
   end
 
   defp convert_to_domain_stream(payload) do
-    OfferSoapResponseConverter.convert_to_domain_stream(
+    OfferXmlConverter.convert_to_domain_stream(
       payload,
-      @offer_tag,
-      @price_xpath,
-      @airline_xpath
+      @mappings
     )
   end
 

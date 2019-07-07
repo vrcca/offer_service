@@ -4,11 +4,13 @@ defmodule OfferService.Infrastructure.BritishAirlines.AirlineSoapRepository do
 
   alias OfferService.Domain.{FlightPreferences, AirlineRepository}
   alias OfferService.Infrastructure.BritishAirlines.SoapRequestConverter
-  alias OfferService.Infrastructure.OfferSoapResponseConverter
+  alias OfferService.Infrastructure.OfferXmlConverter
 
-  @root_tags [:AirlineOffer]
-  @price_xpath ~x"./TotalPrice/SimpleCurrencyPrice/text()"s
-  @airline_xpath ~x"./OfferID/@Owner"s
+  @mappings %{
+    root_tags: [:AirlineOffer],
+    price_xpath: ~x"./TotalPrice/SimpleCurrencyPrice/text()"s,
+    airline_xpath: ~x"./OfferID/@Owner"s
+  }
 
   @behaviour AirlineRepository
 
@@ -48,11 +50,9 @@ defmodule OfferService.Infrastructure.BritishAirlines.AirlineSoapRepository do
   end
 
   defp convert_to_domain_stream(payload) do
-    OfferSoapResponseConverter.convert_to_domain_stream(
+    OfferXmlConverter.convert_to_domain_stream(
       payload,
-      @root_tags,
-      @price_xpath,
-      @airline_xpath
+      @mappings
     )
   end
 
