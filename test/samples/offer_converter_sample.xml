@@ -1,0 +1,8 @@
+<AirShopping>
+  <Offers AirlineID="BA">
+    <Price>12.99</Price>
+  </Offers>
+  <Offers AirlineID="AF">
+    <Price>77.12</Price>
+  </Offers>
+</AirShopping>

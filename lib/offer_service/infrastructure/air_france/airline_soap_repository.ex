@@ -1,8 +1,14 @@
 defmodule OfferService.Infrastructure.AirFrance.AirlineSoapRepository do
+  import SweetXml
   require Logger
 
   alias OfferService.Domain.{FlightPreferences, AirlineRepository}
-  alias OfferService.Infrastructure.AirFrance.{SoapRequestConverter, SoapResponseConverter}
+  alias OfferService.Infrastructure.AirFrance.{SoapRequestConverter}
+  alias OfferService.Infrastructure.OfferSoapResponseConverter
+
+  @offer_tag [:Offer]
+  @price_xpath ~x"./TotalPrice/DetailCurrencyPrice/Total/text()"s
+  @airline_xpath ~x"./@Owner"s
 
   @behaviour AirlineRepository
 
@@ -13,7 +19,7 @@ defmodule OfferService.Infrastructure.AirFrance.AirlineSoapRepository do
     with {:ok, response} <- call_air_shopping(request),
          %HTTPoison.Response{body: body} <- response do
       body
-      |> SoapResponseConverter.convert_to_domain_stream()
+      |> convert_to_domain_stream()
       |> get_first()
     else
       e ->
@@ -40,6 +46,15 @@ defmodule OfferService.Infrastructure.AirFrance.AirlineSoapRepository do
         "\"http://www.af-klm.com/services/passenger/ProvideAirShopping/provideAirShopping\"",
       "api_key" => api_key
     }
+  end
+
+  defp convert_to_domain_stream(payload) do
+    OfferSoapResponseConverter.convert_to_domain_stream(
+      payload,
+      @offer_tag,
+      @price_xpath,
+      @airline_xpath
+    )
   end
 
   defp get_first(offers) do

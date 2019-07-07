@@ -1,8 +1,14 @@
 defmodule OfferService.Infrastructure.BritishAirlines.AirlineSoapRepository do
   require Logger
+  import SweetXml
 
   alias OfferService.Domain.{FlightPreferences, AirlineRepository}
-  alias OfferService.Infrastructure.BritishAirlines.{SoapRequestConverter, SoapResponseConverter}
+  alias OfferService.Infrastructure.BritishAirlines.SoapRequestConverter
+  alias OfferService.Infrastructure.OfferSoapResponseConverter
+
+  @root_tags [:AirlineOffer]
+  @price_xpath ~x"./TotalPrice/SimpleCurrencyPrice/text()"s
+  @airline_xpath ~x"./OfferID/@Owner"s
 
   @behaviour AirlineRepository
 
@@ -13,7 +19,7 @@ defmodule OfferService.Infrastructure.BritishAirlines.AirlineSoapRepository do
     with {:ok, response} <- call_air_shopping(request),
          %HTTPoison.Response{body: body} <- response do
       body
-      |> SoapResponseConverter.convert_to_domain_stream()
+      |> convert_to_domain_stream()
       |> get_first()
     else
       e ->
@@ -39,6 +45,15 @@ defmodule OfferService.Infrastructure.BritishAirlines.AirlineSoapRepository do
       "Soapaction" => "AirShoppingV01",
       "Client-Key" => api_key
     }
+  end
+
+  defp convert_to_domain_stream(payload) do
+    OfferSoapResponseConverter.convert_to_domain_stream(
+      payload,
+      @root_tags,
+      @price_xpath,
+      @airline_xpath
+    )
   end
 
   defp get_first(offers) do
