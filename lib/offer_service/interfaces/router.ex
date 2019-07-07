@@ -17,7 +17,7 @@ defmodule OfferService.Interfaces.Router do
   plug(Plug.Logger)
 
   plug(:match)
-  plug(ResponseContentTypePlug, content_type: "application/json")
+  plug(ResponseContentTypePlug, type: "application/json")
   plug(:dispatch)
 
   get "/findCheapestOffer" do
