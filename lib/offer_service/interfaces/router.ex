@@ -2,7 +2,12 @@ defmodule OfferService.Interfaces.Router do
   use Plug.Router
 
   alias OfferService.Application.CheapestOfferSearch
-  alias OfferService.Interfaces.{FlightPreferenceRequestConverter, CheapestOfferResponseConverter}
+
+  alias OfferService.Interfaces.{
+    ResponseContentTypePlug,
+    FlightPreferenceRequestConverter,
+    CheapestOfferResponseConverter
+  }
 
   if Mix.env() == :dev do
     use Plug.Debugger
@@ -12,11 +17,10 @@ defmodule OfferService.Interfaces.Router do
   plug(Plug.Logger)
 
   plug(:match)
+  plug(ResponseContentTypePlug, content_type: "application/json")
   plug(:dispatch)
 
   get "/findCheapestOffer" do
-    conn = conn |> put_resp_content_type("application/json")
-
     with {:ok, preference} <- FlightPreferenceRequestConverter.convert(conn) do
       result =
         preference
