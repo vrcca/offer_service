@@ -11,7 +11,7 @@ Here are located the use cases of the app (which is just 1 for now). This should
 You can find domain-specific logic. For now, I only created the repositories and the domain models. This should be also heavily covered by tests.
 
 ### Infrastructure
-Keeps all the "glue code" necessary for it to run. It connects the app to the external services. Tests in here are usually integration tests. You will notice [airline-specific code](#about-airline-specific-code) here.
+Keeps all the "glue code" necessary for it to run. It connects the app to the external services. Tests in here are usually integration tests. You will notice [airline-specific code](#airline-specific-code) here.
 
 ### Interfaces
 The entry points of the app. In here, I left the parsing logic to keep it closer to the code that uses it. Tests in this folder are mostly integration tests.
