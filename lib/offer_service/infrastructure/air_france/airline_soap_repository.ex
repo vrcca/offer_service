@@ -36,9 +36,10 @@ defmodule OfferService.Infrastructure.AirFrance.AirlineSoapRepository do
     )
   end
 
+  # assumes the first offer is the cheapest
   defp get_first(offers) do
     offers
-    |> Enum.take(1) # assumes the first is the cheapest
+    |> Enum.take(1)
     |> case do
       [] -> nil
       [offer] -> offer
