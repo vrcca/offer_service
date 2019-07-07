@@ -1,4 +1,4 @@
-defmodule OfferService.Infrastructure.BritishAirlines.SoapResponseConverter do
+defmodule OfferService.Infrastructure.AirFrance.SoapResponseConverter do
   import SweetXml
 
   alias OfferService.Domain.Offer
@@ -9,21 +9,8 @@ defmodule OfferService.Infrastructure.BritishAirlines.SoapResponseConverter do
 
   def convert_to_domain_stream(payload) do
     payload
-    |> stream_tags([:AirlineOffer], discard: [:AirlineOffer])
+    |> stream_tags([:Offer], discard: [:Offer])
     |> to_domain_stream()
-  end
-
-  defp to_domain_stream(offers) do
-    offers
-    |> Stream.map(fn {_, offer} ->
-      price =
-        offer
-        |> xpath(~x"./TotalPrice/SimpleCurrencyPrice/text()"s)
-        |> convert_price_to_cents()
-
-      airline = offer |> xpath(~x"./OfferID/@Owner"s)
-      Offer.new(price: price, airline: airline)
-    end)
   end
 
   defp convert_price_to_cents(price) do
@@ -31,5 +18,18 @@ defmodule OfferService.Infrastructure.BritishAirlines.SoapResponseConverter do
     |> String.trim()
     |> String.replace(~r/[,.]/, "")
     |> String.to_integer()
+  end
+
+  defp to_domain_stream(offers) do
+    offers
+    |> Stream.map(fn {_, offer} ->
+      price =
+        offer
+        |> xpath(~x"./TotalPrice/DetailCurrencyPrice/Total/text()"s)
+        |> convert_price_to_cents()
+
+      airline = offer |> xpath(~x"./@Owner"s)
+      Offer.new(price: price, airline: airline)
+    end)
   end
 end

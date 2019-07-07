@@ -5,6 +5,7 @@ services:
     image: andyrbell/mountebank
     ports:
       - "7777:7777"
+      - "8888:8888"
       - "2525:2525"
     volumes:
       - "./priv/api_stubs:/imposters"

@@ -1,0 +1,50 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+    <soapenv:Header/>
+    <soapenv:Body xmlns="http://www.iata.org/IATA/EDIST/2017.1">
+        <AirShoppingRQ Version="17.1">
+            <Document/>
+            <Party>
+                <Sender>
+                    <TravelAgencySender>
+                        <Name>Test</Name>
+                        <PseudoCity>PARMM211L</PseudoCity>
+                        <IATA_Number>12345675</IATA_Number>
+                        <AgencyID>id</AgencyID>
+                    </TravelAgencySender>
+                </Sender>
+                <Recipient>
+                    <ORA_Recipient>
+                        <AirlineID>AF</AirlineID>
+                    </ORA_Recipient>
+                </Recipient>
+            </Party>
+            <CoreQuery>
+                <OriginDestinations>
+                    <OriginDestination>
+                        <Departure>
+                            <AirportCode><%= @origin %></AirportCode>
+                            <Date><%= @departure_date %></Date>
+                        </Departure>
+                        <Arrival>
+                            <AirportCode><%= @destination %></AirportCode>
+                        </Arrival>
+                    </OriginDestination>
+                </OriginDestinations>
+            </CoreQuery>
+            <Preference>
+                <CabinPreferences>
+                    <CabinType>
+                        <Code>1</Code>
+                    </CabinType>
+                </CabinPreferences>
+            </Preference>
+            <DataLists>
+                <PassengerList>
+                    <Passenger>
+                        <PTC>ADT</PTC>
+                    </Passenger>
+                </PassengerList>
+            </DataLists>
+        </AirShoppingRQ>
+    </soapenv:Body>
+</soapenv:Envelope>

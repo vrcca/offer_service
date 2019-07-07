@@ -1,0 +1,37 @@
+"responses": [
+    {
+        "is": {
+            "body": "<%- stringify(filename, 'responses/air_france_air_shopping.xml') %>",
+            "statusCode": 200,
+            "headers": {
+                "Content-Type": "text/xml"
+            }
+        }
+    }
+],
+"predicates": [
+    {
+        "and": [
+            {
+                "matches": {
+                    "method" : "POST",
+                    "path" : "/passenger/distribmgmt/001448v01/EXT"
+                }
+            },
+            {
+                "contains": { "body": "2019-09-28" },
+                "xpath": {
+                    "selector": "//*[local-name(.)='Date']"
+                }
+            },
+            {
+                "contains": {
+                    "headers": {
+                        "SOAPACtion": "\"http://www.af-klm.com/services/passenger/ProvideAirShopping/provideAirShopping\"",
+                        "Content-Type": "text/xml"
+                    }
+                }
+            }
+        ]
+    }
+]

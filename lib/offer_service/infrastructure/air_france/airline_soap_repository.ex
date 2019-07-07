@@ -1,8 +1,8 @@
-defmodule OfferService.Infrastructure.BritishAirlines.AirlineSoapRepository do
+defmodule OfferService.Infrastructure.AirFrance.AirlineSoapRepository do
   require Logger
 
   alias OfferService.Domain.{FlightPreferences, AirlineRepository}
-  alias OfferService.Infrastructure.BritishAirlines.{SoapRequestConverter, SoapResponseConverter}
+  alias OfferService.Infrastructure.AirFrance.{SoapRequestConverter, SoapResponseConverter}
 
   @behaviour AirlineRepository
 
@@ -27,17 +27,19 @@ defmodule OfferService.Infrastructure.BritishAirlines.AirlineSoapRepository do
   end
 
   # FIXME: Move this to a configuration file (get from environment)
-  # https//test.api.ba.com/
+  # https//test.api.ba.com
+  # https://ndc-rct.airfranceklm.com
   defp air_shopping_resource() do
-    "http://localhost:7777/selling-distribution/AirShopping/V2"
+    "http://localhost:8888/passenger/distribmgmt/001448v01/EXT"
   end
 
   defp make_headers() do
     %{
-      "Content-Type" => "application/xml",
-      "Soapaction" => "AirShoppingV01"
+      "Content-Type" => "text/xml",
+      "SOAPAction" =>
+        "\"http://www.af-klm.com/services/passenger/ProvideAirShopping/provideAirShopping\""
     }
-    |> Map.put("Client-Key", retrieve_client_key())
+    |> Map.put("api_key", retrieve_client_key())
   end
 
   # FIXME: Move this to a configuration file (get from environment)
