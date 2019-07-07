@@ -27,7 +27,8 @@ defmodule OfferService.MixProject do
       {:mox, "~> 0.5", only: [:test, :integration]},
       {:plug_cowboy, "~> 2.1"},
       {:httpoison, "~> 1.4"},
-      {:sweet_xml, "~> 0.6"}
+      {:sweet_xml, "~> 0.6"},
+      {:jason, "~> 1.1"}
     ]
   end
 end
