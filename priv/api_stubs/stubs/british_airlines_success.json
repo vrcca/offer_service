@@ -19,11 +19,9 @@
                 }
             },
             {
-                "contains": {
-                    "headers": {
-                        "Soapaction": "AirShoppingV01",
-                        "Content-Type": "application/xml"
-                    }
+                "contains": { "body": "2019-09-28" },
+                "xpath": {
+                    "selector": "//*[local-name(.)='Date']"
                 }
             }
         ]

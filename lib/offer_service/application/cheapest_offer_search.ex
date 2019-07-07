@@ -15,11 +15,6 @@ defmodule OfferService.Application.CheapestOfferSearch do
     |> Stream.map(fn {:ok, offer} -> offer end)
   end
 
-  defp select_cheapest(offers) do
-    offers
-    |> Enum.min_by(fn %Offer{price: price} -> price end, fn -> nil end)
-  end
-
   defp stream_in_parallel(enumerables, fun) do
     opts = [max_concurrency: length(enumerables)]
 
@@ -29,5 +24,10 @@ defmodule OfferService.Application.CheapestOfferSearch do
       fun,
       opts
     )
+  end
+
+  defp select_cheapest(offers) do
+    offers
+    |> Enum.min_by(fn %Offer{price: price} -> price end, fn -> nil end)
   end
 end
