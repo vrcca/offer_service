@@ -47,6 +47,8 @@ I am assuming that in the future this may change, but to keep it simple and fast
 
 3. I used `HTTPoison` to make the requests to the airline APIs. It uses hackney to do the real requests which keep a connection pool to try to optimize the requests.
 
+4. `Task.Supervisor` was used to issue async requests to the repository. It is important to notice that the max concurrency enabled by this is the total of schedulers of the VM.
+
 ## Deployment
 
 1. We can use Kubernetes to deploy our app. For this, we can build and deploy the docker image to a docker hub then use it.
