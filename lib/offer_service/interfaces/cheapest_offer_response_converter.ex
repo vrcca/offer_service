@@ -16,7 +16,7 @@ defmodule OfferService.Interfaces.CheapestOfferResponseConverter do
   def convert(nil) do
     %{
       data: %{
-        cheapestOffer: %{}
+        cheapestOffer: nil
       }
     }
     |> Jason.encode!()

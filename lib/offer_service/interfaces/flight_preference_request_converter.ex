@@ -3,6 +3,7 @@ defmodule OfferService.Interfaces.FlightPreferenceRequestConverter do
 
   def convert(conn = %Plug.Conn{}) do
     conn
+    |> Plug.Conn.fetch_query_params()
     |> Map.get(:params)
     |> to_domain()
     |> case do

@@ -56,7 +56,7 @@ defmodule OfferService.Interfaces.RouterTest do
 
     conn = Router.call(conn, @opts)
 
-    expected_response = %{"data" => %{"cheapestOffer" => %{}}}
+    expected_response = %{"data" => %{"cheapestOffer" => nil}}
 
     assert conn.status == 200
     assert Jason.decode!(conn.resp_body) == expected_response
