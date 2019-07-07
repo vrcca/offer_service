@@ -17,7 +17,7 @@ test:
 	mix format --check-formatted && \
 	$(MAKE) unit-test && \
 	$(MAKE) start-dependencies && \
-	$(MAKE) integration-test && \
+	$(MAKE) integration-test; \
 	$(MAKE) stop-dependencies
 
 unit-test:

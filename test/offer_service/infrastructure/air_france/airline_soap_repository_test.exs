@@ -5,7 +5,7 @@ defmodule OfferService.Infrastructure.AirFrance.AirlineSoapRepositoryTest do
   @repository OfferService.Infrastructure.AirFrance.AirlineSoapRepository
 
   @tag :integration
-  test "Returns cheapest offer from british airlines service" do
+  test "Returns cheapest offer from Air France service" do
     preference = a_flight_preference(departure_date: ~D[2019-09-28])
     assert a_offer(price: 50911, airline: "AF") == @repository.retrieve_cheapest_offer(preference)
   end

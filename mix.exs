@@ -17,7 +17,7 @@ defmodule OfferService.MixProject do
 
   def application do
     [
-      extra_applications: [:logger],
+      extra_applications: [:logger, :eex],
       mod: {OfferService.Application, [Mix.env()]}
     ]
   end
