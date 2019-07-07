@@ -21,7 +21,7 @@ Run `BA_API_KEY="british_key" AF_API_KEY="air_france_key" make start`
 ## Running the app with Docker
 1. Install Docker
 2. Run `make docker-image`
-3. Run `make start-with-docker`
+3. Run `BA_API_KEY="british_key" AF_API_KEY="air_france_key" make start-with-docker`
 
 Also, you can pass the port when starting with docker:
 `PORT=4001 make start-with-docker`
@@ -30,8 +30,8 @@ Also, you can pass the port when starting with docker:
 
 ### Find Cheapest Offer
  Returns the Airline and price of the cheapest offer at the given date and route.
- 
-Endpoint: 
+
+Endpoint:
 `GET /findCheapestOffer`
 
 Required query parameters:
