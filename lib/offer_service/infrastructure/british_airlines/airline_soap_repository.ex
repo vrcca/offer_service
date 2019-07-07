@@ -30,6 +30,22 @@ defmodule OfferService.Infrastructure.BritishAirlines.AirlineSoapRepository do
     end
   end
 
+  defp convert_to_domain_stream(payload) do
+    OfferXmlConverter.convert_to_domain_stream(
+      payload,
+      @mappings
+    )
+  end
+
+  defp get_first(offers) do
+    offers
+    |> Enum.take(1)
+    |> case do
+      [] -> nil
+      [offer] -> offer
+    end
+  end
+
   defp call_air_shopping(request) do
     HTTPoison.post(air_shopping_resource(), request, make_headers())
   end
@@ -47,22 +63,5 @@ defmodule OfferService.Infrastructure.BritishAirlines.AirlineSoapRepository do
       "Soapaction" => "AirShoppingV01",
       "Client-Key" => api_key
     }
-  end
-
-  defp convert_to_domain_stream(payload) do
-    OfferXmlConverter.convert_to_domain_stream(
-      payload,
-      @mappings
-    )
-  end
-
-  defp get_first(offers) do
-    offers
-    |> Stream.take(1)
-    |> Enum.to_list()
-    |> case do
-      [] -> nil
-      [offer] -> offer
-    end
   end
 end
