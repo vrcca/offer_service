@@ -16,9 +16,8 @@ defmodule OfferService.Infrastructure.AirFrance.AirlineSoapRepository do
 
   @impl AirlineRepository
   def retrieve_cheapest_offer(preferences = %FlightPreferences{}) do
-    request = SoapRequestConverter.convert(preferences)
-
-    with {:ok, response} <- call_air_shopping(request),
+    with request = SoapRequestConverter.convert(preferences),
+         {:ok, response} <- call_air_shopping(request),
          %HTTPoison.Response{body: body} <- response do
       body
       |> convert_to_domain_stream()
