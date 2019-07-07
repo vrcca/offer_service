@@ -13,6 +13,15 @@ defmodule OfferService.Interfaces.CheapestOfferResponseConverter do
     |> Jason.encode!()
   end
 
+  def convert(nil) do
+    %{
+      data: %{
+        cheapestOffer: %{}
+      }
+    }
+    |> Jason.encode!()
+  end
+
   def convert({:error, reason}) do
     %{error: reason}
     |> Jason.encode!()

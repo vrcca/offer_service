@@ -44,4 +44,21 @@ defmodule OfferService.Interfaces.RouterTest do
     assert conn.status == 400
     assert Jason.decode!(conn.resp_body) == expected_response
   end
+
+  @tag :integration
+  test "returns empty response when there is no data" do
+    conn =
+      a_cheap_offer_request(
+        origin: "BER",
+        destination: "LHR",
+        departureDate: "2001-09-28"
+      )
+
+    conn = Router.call(conn, @opts)
+
+    expected_response = %{"data" => %{"cheapestOffer" => %{}}}
+
+    assert conn.status == 200
+    assert Jason.decode!(conn.resp_body) == expected_response
+  end
 end
