@@ -11,7 +11,7 @@ defmodule OfferService.Infrastructure.BritishAirlines.AirlineSoapRepositoryTest 
   end
 
   @tag :integration
-  test "Returns nil when there is an error" do
+  test "Returns nil when there is no response" do
     preference = a_flight_preference(departure_date: ~D[2016-09-28])
     assert nil == @repository.retrieve_cheapest_offer(preference)
   end
