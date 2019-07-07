@@ -25,10 +25,11 @@
                 }
             },
             {
-                "contains": {
+                "equals": {
                     "headers": {
                         "SOAPACtion": "\"http://www.af-klm.com/services/passenger/ProvideAirShopping/provideAirShopping\"",
-                        "Content-Type": "text/xml"
+                        "Content-Type": "text/xml",
+                        "api_key": "sandbox"
                     }
                 }
             }

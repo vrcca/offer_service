@@ -26,22 +26,20 @@ defmodule OfferService.Infrastructure.BritishAirlines.AirlineSoapRepository do
     HTTPoison.post(air_shopping_resource(), request, make_headers())
   end
 
-  # FIXME: Move this to a configuration file (get from environment)
-  # https//test.api.ba.com/
   defp air_shopping_resource() do
-    "http://localhost:7777/selling-distribution/AirShopping/V2"
+    url = Application.get_env(:offer_service, :british_airlines_api_url)
+    url <> "/selling-distribution/AirShopping/V2"
   end
 
   defp make_headers() do
+    api_key = Application.get_env(:offer_service, :british_airlines_api_key)
+
     %{
       "Content-Type" => "application/xml",
-      "Soapaction" => "AirShoppingV01"
+      "Soapaction" => "AirShoppingV01",
+      "Client-Key" => api_key
     }
-    |> Map.put("Client-Key", retrieve_client_key())
   end
-
-  # FIXME: Move this to a configuration file (get from environment)
-  defp retrieve_client_key(), do: ""
 
   defp get_first(offers) do
     offers

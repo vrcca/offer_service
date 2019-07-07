@@ -18,13 +18,13 @@ defmodule OfferService.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {OfferService.Application, []}
+      mod: {OfferService.Application, [Mix.env()]}
     ]
   end
 
   defp deps do
     [
-      {:mox, "~> 0.5", only: :test},
+      {:mox, "~> 0.5", only: [:test, :integration]},
       {:plug_cowboy, "~> 2.1"},
       {:httpoison, "~> 1.4"},
       {:sweet_xml, "~> 0.6"}

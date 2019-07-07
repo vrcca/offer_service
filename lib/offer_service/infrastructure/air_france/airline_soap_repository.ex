@@ -26,24 +26,21 @@ defmodule OfferService.Infrastructure.AirFrance.AirlineSoapRepository do
     HTTPoison.post(air_shopping_resource(), request, make_headers())
   end
 
-  # FIXME: Move this to a configuration file (get from environment)
-  # https//test.api.ba.com
-  # https://ndc-rct.airfranceklm.com
   defp air_shopping_resource() do
-    "http://localhost:8888/passenger/distribmgmt/001448v01/EXT"
+    url = Application.get_env(:offer_service, :air_france_api_url)
+    url <> "/passenger/distribmgmt/001448v01/EXT"
   end
 
   defp make_headers() do
+    api_key = Application.get_env(:offer_service, :air_france_api_key)
+
     %{
       "Content-Type" => "text/xml",
       "SOAPAction" =>
-        "\"http://www.af-klm.com/services/passenger/ProvideAirShopping/provideAirShopping\""
+        "\"http://www.af-klm.com/services/passenger/ProvideAirShopping/provideAirShopping\"",
+      "api_key" => api_key
     }
-    |> Map.put("api_key", retrieve_client_key())
   end
-
-  # FIXME: Move this to a configuration file (get from environment)
-  defp retrieve_client_key(), do: ""
 
   defp get_first(offers) do
     offers

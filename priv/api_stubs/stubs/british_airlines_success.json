@@ -25,10 +25,11 @@
                 }
             },
             {
-                "contains": {
+                "equals": {
                     "headers": {
                         "Soapaction": "AirShoppingV01",
-                        "Content-Type": "application/xml"
+                        "Content-Type": "application/xml",
+                        "Client-Key": "sandbox"
                     }
                 }
             }

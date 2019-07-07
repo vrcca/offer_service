@@ -21,10 +21,10 @@ test:
 	$(MAKE) stop-dependencies
 
 unit-test:
-	ENV=test mix test --exclude integration
+	MIX_ENV=test mix test --exclude integration
 
 integration-test:
-	ENV=integration mix test --only integration
+	MIX_ENV=integration mix test --only integration
 
 start-dependencies:
 	docker-compose up -d

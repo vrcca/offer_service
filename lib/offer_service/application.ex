@@ -14,7 +14,7 @@ defmodule OfferService.Application do
     opts = [strategy: :one_for_one, name: OfferService.Supervisor]
 
     with result = {:ok, _pid} <- Supervisor.start_link(children, opts) do
-      IO.puts("Server running on port #{port}")
+      IO.puts("\nServer running on port #{port}\n")
       result
     end
   end
