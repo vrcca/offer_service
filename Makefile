@@ -1,4 +1,5 @@
 PORT?=4001
+ENV?=dev
 
 .PHONY: build, dependencies, start, unit-test, integration-test, start-dependencies, stop-dependencies, test
 
@@ -31,3 +32,6 @@ start-dependencies:
 
 stop-dependencies:
 	docker-compose down
+
+release:
+	MIX_ENV=$(ENV) mix release --overwrite

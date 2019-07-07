@@ -15,6 +15,8 @@ defmodule OfferService.Interfaces.Router do
   plug(:dispatch)
 
   get "/findCheapestOffer" do
+    conn = conn |> put_resp_content_type("application/json")
+
     with {:ok, preference} <- FlightPreferenceRequestConverter.convert(conn) do
       result =
         preference

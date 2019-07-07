@@ -24,6 +24,9 @@ defmodule OfferService.Interfaces.RouterTest do
     expected_response = %{"data" => %{"cheapestOffer" => %{"amount" => 94.14, "airline" => "BA"}}}
     assert conn.status == 200
     assert Jason.decode!(conn.resp_body) == expected_response
+
+    [content_type] = get_resp_header(conn, "content-type")
+    assert content_type =~ "application/json"
   end
 
   @tag :integration
@@ -43,6 +46,8 @@ defmodule OfferService.Interfaces.RouterTest do
 
     assert conn.status == 400
     assert Jason.decode!(conn.resp_body) == expected_response
+    [content_type] = get_resp_header(conn, "content-type")
+    assert content_type =~ "application/json"
   end
 
   @tag :integration
