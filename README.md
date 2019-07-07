@@ -1,6 +1,6 @@
 # Offer Service
 
-**Fetches cheap flights directly from Airlines.**
+**Fetches flight offers directly from select Airlines.**
 
 Assumptions about this project can be found at [ASSUMPTIONS.md](ASSUMPTIONS.md).
 
@@ -25,6 +25,7 @@ Run `BA_API_KEY="british_key" AF_API_KEY="air_france_key" make start`
 
 Also, you can pass the port when starting with docker:
 `PORT=4001 make start-with-docker`
+
 
 ## Endpoints
 
