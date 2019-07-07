@@ -22,6 +22,10 @@ defmodule OfferService.Interfaces.Router do
         |> CheapestOfferResponseConverter.convert()
 
       send_resp(conn, 200, result)
+    else
+      error = {:error, _reason} ->
+        response = CheapestOfferResponseConverter.convert(error)
+        send_resp(conn, 400, response)
     end
   end
 

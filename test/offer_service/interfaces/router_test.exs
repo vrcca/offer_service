@@ -25,4 +25,23 @@ defmodule OfferService.Interfaces.RouterTest do
     assert conn.status == 200
     assert Jason.decode!(conn.resp_body) == expected_response
   end
+
+  @tag :integration
+  test "returns error when missing properties" do
+    conn =
+      a_cheap_offer_request(
+        missing_origin: "BER",
+        missing_destination: "LHR",
+        wrong_departure: "2019-09-28"
+      )
+
+    conn = Router.call(conn, @opts)
+
+    expected_response = %{
+      "error" => "Missing query parameter: origin, destination, departureDate"
+    }
+
+    assert conn.status == 400
+    assert Jason.decode!(conn.resp_body) == expected_response
+  end
 end

@@ -13,5 +13,10 @@ defmodule OfferService.Interfaces.CheapestOfferResponseConverter do
     |> Jason.encode!()
   end
 
+  def convert({:error, reason}) do
+    %{error: reason}
+    |> Jason.encode!()
+  end
+
   defp convert_cents(price) when is_integer(price), do: price / 100
 end
