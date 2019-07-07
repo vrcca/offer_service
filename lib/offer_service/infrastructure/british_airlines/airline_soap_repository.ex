@@ -47,7 +47,7 @@ defmodule OfferService.Infrastructure.BritishAirlines.AirlineSoapRepository do
   end
 
   defp call_air_shopping(request) do
-    HTTPoison.post(air_shopping_resource(), request, make_headers())
+    HTTPoison.post(air_shopping_resource(), request, make_headers(), hackney: [pool: :default])
   end
 
   defp air_shopping_resource() do
