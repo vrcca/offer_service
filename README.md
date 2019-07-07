@@ -32,10 +32,10 @@ Also, you can pass the port when starting with docker:
 ### Find Cheapest Offer
  Returns the Airline and price of the cheapest offer at the given date and route.
 
-Endpoint:
+Endpoint:  
 `GET /findCheapestOffer`
 
-Required query parameters:
-`origin`: The airport code of origin.
-`destination`: The airport code of destination.
-`departureDate`: The departure date with format *yyyy-mm-dd*
+Required query parameters:  
+`origin`: The airport code of origin.  
+`destination`: The airport code of destination.  
+`departureDate`: The departure date with format *yyyy-mm-dd*. 
