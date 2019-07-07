@@ -20,13 +20,10 @@ defmodule OfferService.Application.CheapestOfferSearch do
   end
 
   defp stream_in_parallel(enumerables, fun) do
-    opts = [max_concurrency: length(enumerables)]
-
     Task.Supervisor.async_stream_nolink(
       OfferService.AirlineTaskSupervisor,
       enumerables,
-      fun,
-      opts
+      fun
     )
   end
 
