@@ -1,15 +1,15 @@
 defmodule OfferService.Application.CheapestOfferSearch do
   alias OfferService.Domain.{FlightPreferences, Offer}
 
-  def search(prefs = %FlightPreferences{}, repositories) do
-    prefs
+  def search(preference = %FlightPreferences{}, repositories) do
+    preference
     |> search_matching_offers(repositories)
     |> select_cheapest()
   end
 
-  defp search_matching_offers(prefs, repositories) do
+  defp search_matching_offers(preference, repositories) do
     repositories
-    |> stream_in_parallel(fn repo -> repo.retrieve_cheapest_offer(prefs) end)
+    |> stream_in_parallel(fn repo -> repo.retrieve_cheapest_offer(preference) end)
     |> Stream.filter(fn result -> elem(result, 0) == :ok end)
     |> Stream.filter(fn {:ok, offer} -> offer != nil end)
     |> Stream.map(fn {:ok, offer} -> offer end)

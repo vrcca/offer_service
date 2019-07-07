@@ -1,4 +1,6 @@
 defmodule Support.Fixtures do
+  use Plug.Test
+
   alias OfferService.Domain.{Offer, Flight, FlightPreferences}
 
   def a_flight_preference(opts \\ []) do
@@ -24,5 +26,13 @@ defmodule Support.Fixtures do
       arrival_date: ~D[2019-07-17]
     )
     |> struct(opts)
+  end
+
+  def a_cheap_offer_request(params) when is_list(params) do
+    params = Enum.into(params, %{})
+
+    conn(:get, "/findCheapestOffer", params)
+    |> put_req_header("content-type", "application/json")
+    |> put_req_header("accept", "application/json")
   end
 end
