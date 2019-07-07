@@ -12,7 +12,7 @@ defmodule OfferService.Infrastructure.AirFrance.AirlineSoapRepositoryTest do
 
   @tag :integration
   test "Returns nil when there is no response" do
-    preference = a_flight_preference(departure_date: ~D[2016-09-28])
+    preference = a_flight_preference(departure_date: ~D[2016-08-15])
     assert nil == @repository.retrieve_cheapest_offer(preference)
   end
 end

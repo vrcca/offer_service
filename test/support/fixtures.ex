@@ -5,7 +5,7 @@ defmodule Support.Fixtures do
 
   def a_flight_preference(opts \\ []) do
     FlightPreferences.new(
-      origin: "BER",
+      origin: "MUC",
       destination: "LHR",
       departure_date: ~D[2019-07-17]
     )
@@ -20,7 +20,7 @@ defmodule Support.Fixtures do
   def a_flight(opts \\ []) do
     Flight.new(
       airline: "AF",
-      origin: "BER",
+      origin: "MUC",
       destination: "LHR",
       departure_date: ~D[2019-07-17],
       arrival_date: ~D[2019-07-17]

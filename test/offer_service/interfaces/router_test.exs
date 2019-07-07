@@ -17,7 +17,7 @@ defmodule OfferService.Interfaces.RouterTest do
 
   @tag :integration
   test "returns cheapest offer data" do
-    conn = a_cheap_offer_request(origin: "BER", destination: "LHR", departureDate: "2019-09-28")
+    conn = a_cheap_offer_request(origin: "MUC", destination: "LHR", departureDate: "2019-09-28")
 
     conn = Router.call(conn, @opts)
 
@@ -30,7 +30,7 @@ defmodule OfferService.Interfaces.RouterTest do
   test "returns error when missing properties" do
     conn =
       a_cheap_offer_request(
-        missing_origin: "BER",
+        missing_origin: "MUC",
         missing_destination: "LHR",
         wrong_departure: "2019-09-28"
       )

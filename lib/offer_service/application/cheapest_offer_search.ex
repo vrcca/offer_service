@@ -11,7 +11,10 @@ defmodule OfferService.Application.CheapestOfferSearch do
   end
 
   defp search_matching_offers(preference) do
-    stream_in_parallel(@repositories, fn repo -> repo.retrieve_cheapest_offer(preference) end)
+    stream_in_parallel(@repositories, fn repo ->
+      Logger.info("Retriving data from #{inspect(repo)}")
+      repo.retrieve_cheapest_offer(preference)
+    end)
     |> Stream.filter(&filter_invalid_offer/1)
     |> Stream.map(fn {:ok, offer} -> offer end)
   end
