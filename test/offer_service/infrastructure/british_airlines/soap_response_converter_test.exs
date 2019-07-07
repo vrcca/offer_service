@@ -11,7 +11,11 @@ defmodule OfferService.Infrastructure.BritishAirlines.SoapResponseConverterTest 
     assert [a_offer(price: 9414, airline: "BA")] == response
   end
 
-  test "empty payload should return empty responses" do
+  test "invalid payload should return empty responses" do
     assert [] == @response_converter.convert_to_domain_stream("<Empty></Empty>") |> Enum.take(1)
+  end
+
+  test "empty payload should return empty responses" do
+    assert [] == @response_converter.convert_to_domain_stream("") |> Enum.take(1)
   end
 end

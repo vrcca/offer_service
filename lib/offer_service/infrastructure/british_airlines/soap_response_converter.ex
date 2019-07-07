@@ -3,6 +3,10 @@ defmodule OfferService.Infrastructure.BritishAirlines.SoapResponseConverter do
 
   alias OfferService.Domain.Offer
 
+  def convert_to_domain_stream("") do
+    []
+  end
+
   def convert_to_domain_stream(payload) do
     payload
     |> stream_tags([:AirlineOffer], discard: [:AirlineOffer])
