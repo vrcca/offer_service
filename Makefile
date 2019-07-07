@@ -12,6 +12,7 @@ dependencies:
 	mix deps.get
 
 start:
+	BA_API_KEY=$(BA_API_KEY) AF_API_KEY=$(AF_API_KEY) \
 	PORT=$(PORT) mix run --no-halt
 
 test:
@@ -35,3 +36,14 @@ stop-dependencies:
 
 release:
 	MIX_ENV=$(ENV) mix release --overwrite
+
+docker-image:
+	docker build -t offer-service .
+
+start-with-docker:
+	docker run \
+	--publish $(PORT):$(PORT) \
+	--env PORT=$(PORT) \
+	--env AF_API_KEY=$(AF_API_KEY) \
+	--env BA_API_KEY=$(BA_API_KEY) \
+	offer-service:latest

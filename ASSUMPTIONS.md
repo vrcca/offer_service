@@ -34,3 +34,5 @@ I am assuming that in the future this may change, but to keep it simple and fast
 1. If my assumptions about the data above are correct, I believe we should stream the response from the webservices in order to avoid downloading the entire payload just to get the first offer.
 
 2. The webservices have load constraints. Some form of backpressure will be needed, however I left it off to keep the solution simple.
+
+3. I did not reasearch about the errors that each airline can return from requests. For instance, an empty response is always returned for any invalid XML response, server validations, api key expiration, api rate limit reached, and other non successful response. Therefore, these were left out from scope. However, they should be handled properly.
