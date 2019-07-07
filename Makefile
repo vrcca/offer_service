@@ -15,15 +15,16 @@ start:
 
 test:
 	mix format --check-formatted && \
+	$(MAKE) unit-test && \
 	$(MAKE) start-dependencies && \
-	mix test --include integration && \
+	$(MAKE) integration-test && \
 	$(MAKE) stop-dependencies
 
 unit-test:
-	mix test --exclude integration
+	ENV=test mix test --exclude integration
 
 integration-test:
-	mix test --only integration
+	ENV=integration mix test --only integration
 
 start-dependencies:
 	docker-compose up -d
